@@ -1,49 +1,7 @@
-#include <node_api.h>
-#include "../common.h"
-#include <iostream>
+
+#include "./nstring.h"
 
 using namespace std;
-
-napi_value jsString (napi_env env, const char* cstr) {
-  napi_value jsstr;
-  NAPI_CALL(env, napi_create_string_utf8(env, cstr, -1, &jsstr));
-  return jsstr;
-}
-
-napi_value jsString (napi_env env, string cppstr) {
-  napi_value jsstr;
-  NAPI_CALL(env, napi_create_string_utf8(env, cppstr.c_str(), -1, &jsstr));
-  return jsstr;
-}
-
-#define JS_STRING(str) jsString(env, (str))
-
-string cppString (napi_env env, napi_value jsstr, size_t size = 259) {
-  size = size + 1;
-
-  napi_valuetype valuetype;
-  NAPI_CALL(env, napi_typeof(env, jsstr, &valuetype));
-  NAPI_ASSERT(env, valuetype == napi_string, "Wrong type of argument. Expects a string.");
-
-  char *buffer = new char[size];
-  NAPI_CALL(env, napi_get_value_string_utf8(env, jsstr, buffer, size, NULL));
-  string str = buffer;
-  delete buffer;
-
-  return str;
-}
-
-size_t cString (napi_env env, napi_value jsstr, char* result, size_t size = 259) {
-  size = size + 1;
-
-  napi_valuetype valuetype;
-  NAPI_CALL(env, napi_typeof(env, jsstr, &valuetype));
-  NAPI_ASSERT(env, valuetype == napi_string, "Wrong type of argument. Expects a string.");
-
-  size_t length;
-  NAPI_CALL(env, napi_get_value_string_utf8(env, jsstr, result, size, &length));
-  return length;
-}
 
 static napi_value cJsString (napi_env env, napi_callback_info info) {
   const char* cstr = "(char*) Hello NAPI";

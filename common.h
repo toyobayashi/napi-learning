@@ -1,3 +1,4 @@
+#pragma once
 // Empty value so that macros here are able to return NULL or void
 #define NAPI_RETVAL_NOTHING  // Intentionally blank #define
 
