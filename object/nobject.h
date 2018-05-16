@@ -16,6 +16,6 @@ napi_value jsGetProperty (napi_env env, napi_value obj, const char* key);
 
 #define DECLARE_NAPI_PROPERTY_VALUE(name, value) { name, 0, 0, 0, 0, value, napi_default, 0 }
 
-#define SET_PROPERTY(obj, key, value) napi_set_named_property(env, obj, key, value)
+#define SET_PROPERTY(obj, key, value) NAPI_CALL(env, napi_set_named_property(env, obj, key, value))
 
 #define GET_PROPERTY(obj, key) jsGetProperty(env, obj, key)
