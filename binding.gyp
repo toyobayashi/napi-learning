@@ -12,5 +12,15 @@
       "target_name": "object",
       "sources": ["./object/index.cpp", "./object/nobject.cpp", "./string/nstring.cpp", "./function/nfunction.cpp", "./type/ntype.cpp"]
     },
+    {
+      "target_name": "async",
+      "sources": [
+        "./async/index.cpp",
+        "./object/nobject.cpp",
+        "./string/nstring.cpp",
+        "./function/nfunction.cpp",
+        "./type/ntype.cpp"
+      ]
+    },
   ]
 }
