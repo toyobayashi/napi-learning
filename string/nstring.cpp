@@ -18,7 +18,10 @@ napi_value jsString (napi_env env, string cppstr) {
 string cppString (napi_env env, napi_value jsstr, size_t size) {
   size = size + 1;
 
-  NAPI_ASSERT(env, JS_TYPE(jsstr) == napi_string, "Wrong type of argument. Expects a string.");
+  if (napi_string != JS_TYPE(jsstr)) {
+    napi_throw_type_error(env, nullptr, "Wrong type of argument. Expects a string.");
+    return "";
+  }
 
   char *buffer = new char[size];
   NAPI_CALL(env, napi_get_value_string_utf8(env, jsstr, buffer, size, nullptr));

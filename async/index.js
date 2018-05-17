@@ -1,13 +1,10 @@
-// const asyncFunction = require('bindings')('async.node')
-const asyncFunction = require('../build/Release/async.node')
+const asyncFunction = require('bindings')('async.node')
 
-asyncFunction('JS, ', str => {
-  console.log(new Date().getTime())
-  console.log(str)
-})
-console.log('Sync.')
-asyncFunction('JS222, ', str => {
-  console.log(new Date().getTime())
-  console.log(str + 'qqq')
-})
-
+for (var i = 0; i < 5; i++) {
+  console.log(i)
+  asyncFunction(i + ' ', str => {
+    console.log(i)
+    console.log(new Date().getTime())
+    console.log(str + 'z')
+  })
+}

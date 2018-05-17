@@ -1,5 +1,4 @@
-#include <node_api.h>
-#include "../common.h"
+#include "./nasync.h"
 #include "../string/nstring.h"
 #include "../function/nfunction.h"
 #include "../object/nobject.h"
@@ -25,16 +24,13 @@ static napi_value asyncFunction (napi_env env, napi_callback_info info) {
 
   the_carrier->_input = CPP_STRING(args[0]);
   the_carrier->_cbref = CREATE_REF(args[1], 1);
-
-  NAPI_CALL(env, napi_create_async_work(
-    env,
-    nullptr,
+  the_carrier->_request = CREATE_ASYNC_WORK(
     JS_STRING("asyncFunction"),
-    [](napi_env env, void* data) -> void {
+    ASYNC_EXECUTE(data) {
       carrier* c = static_cast<carrier*>(data);
       c->_output = c->_input + "Async.";
     },
-    [](napi_env env, napi_status status, void* data) -> void {
+    ASYNC_COMPLETE(data) {
       if (status != napi_ok) {
         napi_throw_type_error(env, nullptr, "Execute callback failed.");
         return;
@@ -43,18 +39,18 @@ static napi_value asyncFunction (napi_env env, napi_callback_info info) {
       carrier* c = static_cast<carrier*>(data);
 
       napi_value argv[1] = { JS_STRING(c->_output) };
+      napi_value callback = GET_REF(c->_cbref);
 
-      NAPI_ASSERT_RETURN_VOID(env, JS_TYPE(GET_REF(c->_cbref)) == napi_function, "c->_cbref is not function.");
-      JS_FUNCTION_CALL(GET_REF(c->_cbref), 1, argv, JS_GLOBAL());
+      NAPI_ASSERT_RETURN_VOID(env, JS_TYPE(callback) == napi_function, "c->_cbref is not function.");
+      JS_FUNCTION_CALL(callback, 1, argv, JS_GLOBAL());
       DELETE_REF(c->_cbref);
-      NAPI_CALL_RETURN_VOID(env, napi_delete_async_work(env, c->_request));
+      DELETE_ASYNC_WORK(c->_request);
       delete c;
     },
-    the_carrier,
-    &the_carrier->_request
-  ));
+    the_carrier
+  );
 
-  NAPI_CALL(env, napi_queue_async_work(env, the_carrier->_request));
+  QUEUE_ASYNC_WORK(the_carrier->_request);
 
   return nullptr;
 }
