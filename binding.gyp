@@ -38,5 +38,15 @@
         "./type/ntype.cpp"
       ]
     },
+    {
+      "target_name": "promise",
+      "sources": [
+        "./promise/npromise.cpp",
+        "./promise/index.cpp",
+        "./string/nstring.cpp",
+        "./function/nfunction.cpp",
+        "./type/ntype.cpp"
+      ]
+    },
   ]
 }

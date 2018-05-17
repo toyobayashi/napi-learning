@@ -4,7 +4,7 @@
 
 Node.js version: Current
 
-## Note
+## MICRO
 
 ``` cpp
 #define JS_TYPE(value) jsType(env, value)
@@ -22,11 +22,23 @@ Node.js version: Current
 #define JS_NUMBER(number) jsNumber(env, number)
 // => napi_value: number
 
+#define JS_PROMISE() jsPromise(env)
+// => promise_struct: { deferred: napi_deferred; promise: (napi_value: Promise<any>) }
+
 #define JS_OBJECT() jsObject(env)
 // => napi_value: {}
 
 #define JS_GLOBAL() jsGlobal(env)
 // => napi_value: NodeJS.Global
+
+#define CPP_STRING(str) cppString(env, str)
+// => std::string
+
+#define C_STRING(str, result) cString(env, str, result)
+// => size_t
+
+#define C_DOUBLE(number) cDouble(env, number)
+// => double
 
 #define DECLARE_NAPI_PROPERTY_CALLBACK DECLARE_NAPI_PROPERTY
 // => napi_property_descriptor (method)
@@ -39,4 +51,34 @@ Node.js version: Current
 
 #define GET_PROPERTY(obj, key) jsGetProperty(env, obj, key)
 // => napi_value: any
+
+#define CREATE_REF(value, count) createRef(env, value, count)
+// => napi_ref
+
+#define GET_REF(ref) getRef(env, ref)
+// => napi_value: any
+
+#define DELETE_REF(ref) deleteRef(env, ref)
+// => void
+
+#define CREATE_ASYNC_WORK(name, execute, complete, data) createAsyncWork(env, name, execute, complete, data)
+// => napi_async_work
+
+#define QUEUE_ASYNC_WORK(work) queueAsyncWork(env, work)
+// => void
+
+#define DELETE_ASYNC_WORK(work) deleteAsyncWork(env, work)
+// => void
+
+#define ASYNC_EXECUTE(data) [](napi_env env, void* data)
+// => lambda args
+
+#define ASYNC_COMPLETE(data) [](napi_env env, napi_status status, void* data)
+// => lambda args
+
+#define RESOLVE_PROMISE(promiseStruct, resolution) resolvePromise(env, promiseStruct, resolution)
+// => void
+
+#define REJECT_PROMISE(promiseStruct, rejection) rejectPromise(env, promiseStruct, rejection)
+// => void
 ```
