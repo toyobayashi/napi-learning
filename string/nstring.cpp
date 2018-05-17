@@ -21,9 +21,9 @@ string cppString (napi_env env, napi_value jsstr, size_t size) {
   NAPI_ASSERT(env, JS_TYPE(jsstr) == napi_string, "Wrong type of argument. Expects a string.");
 
   char *buffer = new char[size];
-  NAPI_CALL(env, napi_get_value_string_utf8(env, jsstr, buffer, size, NULL));
+  NAPI_CALL(env, napi_get_value_string_utf8(env, jsstr, buffer, size, nullptr));
   string str = buffer;
-  delete buffer;
+  delete[] buffer;
 
   return str;
 }

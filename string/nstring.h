@@ -11,4 +11,8 @@ std::string cppString (napi_env env, napi_value jsstr, size_t size = 259);
 
 size_t cString (napi_env env, napi_value jsstr, char* result, size_t size = 259);
 
-#define JS_STRING(str) jsString(env, (str))
+#define JS_STRING(str) jsString(env, str)
+
+#define CPP_STRING(str) cppString(env, str)
+
+#define C_STRING(str, result) cString(env, str, result)

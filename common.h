@@ -59,3 +59,11 @@
 
 #define DECLARE_NAPI_GETTER(name, func)                                  \
   { (name), 0, 0, (func), 0, 0, napi_default, 0 }
+
+// 8.x
+#ifndef NAPI_MODULE_INIT
+#define NAPI_MODULE_INIT()                                               \
+  static napi_value init (napi_env env, napi_value exports);             \
+  NAPI_MODULE(NODE_GYP_MODULE_NAME, init)                                \
+  static napi_value init (napi_env env, napi_value exports)
+#endif

@@ -16,12 +16,12 @@ static napi_value cppJsString (napi_env env, napi_callback_info info) {
 static napi_value getJsString(napi_env env, napi_callback_info info) {
   size_t argc = 1;
   napi_value args[1];
-  NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, NULL, NULL));
+  NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, nullptr, nullptr));
   NAPI_ASSERT(env, argc >= 1, "Wrong number of arguments");
 
-  string cppstr = cppString(env, args[0]);
+  string cppstr = CPP_STRING(args[0]);
   char cstr[260];
-  size_t length = cString(env, args[0], cstr);
+  size_t length = C_STRING(args[0], cstr);
 
   printf("cstr: %s\n", cstr);
   printf("strlen(cstr): %zu\n", strlen(cstr));
@@ -29,7 +29,7 @@ static napi_value getJsString(napi_env env, napi_callback_info info) {
   printf("cppstr: %s\n", cppstr.c_str());
   printf("cppstr.length(): %zu\n", cppstr.length());
 
-  return NULL;
+  return nullptr;
 }
 
 NAPI_MODULE_INIT() {

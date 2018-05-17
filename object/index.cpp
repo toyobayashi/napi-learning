@@ -6,7 +6,7 @@
 static napi_value runCallback (napi_env env, napi_callback_info info) {
   size_t argc = 2;
   napi_value args[2];
-  NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, NULL, NULL));
+  NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, nullptr, nullptr));
   NAPI_ASSERT(env, argc == 2, "Wrong number of arguments");
 
   NAPI_ASSERT(env, JS_TYPE(args[0]) == napi_object, "Expect an object");
@@ -22,7 +22,7 @@ static napi_value runCallback (napi_env env, napi_callback_info info) {
   argv[1] = fromJs;
   JS_FUNCTION_CALL(args[1], 2, argv, JS_GLOBAL());
 
-  return NULL;
+  return nullptr;
 }
 
 NAPI_MODULE_INIT() {

@@ -2,7 +2,7 @@
 #include <node_api.h>
 #include "../common.h"
 
-napi_value jsFunction (napi_env env, const char* name, napi_callback cb, size_t length = -1, void* data = NULL);
+napi_value jsFunction (napi_env env, const char* name, napi_callback cb, size_t length = -1, void* data = nullptr);
 
 napi_value jsFunctionCall (napi_env env, napi_value thisArg, napi_value fun, size_t argc, const napi_value* argv);
 
