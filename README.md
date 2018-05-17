@@ -2,9 +2,34 @@
 
 流下了不会吸屁屁的泪水
 
-Node.js version: Current
+## 环境
 
-## MICRO
+* Windows 10
+* Node.js 8+
+* Visual Studio 2015+
+* node-gyp + Python 2.7 （可选）
+
+### 只用VS
+
+勾选使用C++的桌面开发（其中包括VC++ 2015或2017工具集）并安装。
+
+基本配置：
+
+1. 创建空项目
+2. 资源管理器 → 项目 → 属性
+3. 切换成所有配置 → 常规，目标文件扩展名：.node，配置类型：.dll
+4. VC++目录，设置包含目录和库目录
+5. 链接器 → 输入，附加依赖项：添加node.lib
+6. 为了可以打断点调试，要设置Debug配置下的Node调试命令
+
+node.exe，node.lib，调试平台三者必须对应。
+
+### 用node-gyp
+
+1. 根目录下创建 binding.gyp
+2. node-gyp rebuild
+
+## 宏
 
 ``` cpp
 #define JS_TYPE(value) jsType(env, value)
